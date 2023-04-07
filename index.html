@@ -3,37 +3,15 @@
   <head>
     <meta charset="UTF-8">
     <title>MaxiNET.es</title>
-    <style>
-      body {
-        background-color: black;
-        font-family: Consolas, monospace;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      h1 {
-        color: green;
-        display: inline-block;
-        margin-right: 20px;
-      }
-      .circle {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        background-color: green;
-        border-radius: 50%;
-        animation: blink 1s infinite;
-      }
-      @keyframes blink { 
-        0% { opacity: 1; }
-        50% { opacity: 0; }
-        100% { opacity: 1; }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1>MaxiNET is alive</h1>
     <div class="circle"></div>
+    <div class="toggle-container">
+      <label for="toggle" class="toggle-label"></label>
+      <input type="checkbox" id="toggle" class="toggle-input">
+    </div>
+    <script src="script.js"></script>
   </body>
 </html>
