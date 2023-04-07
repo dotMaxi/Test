@@ -23,11 +23,17 @@
         height: 20px;
         background-color: green;
         border-radius: 50%;
+        animation: blink 1s infinite;
+      }
+      @keyframes blink { 
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
       }
     </style>
   </head>
   <body>
     <div class="circle"></div>
-    <h1>MaxiNET.es is alive</h1>
-    </body>
+    <h1>MaxiNET is alive</h1>
+  </body>
 </html>
