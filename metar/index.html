@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Aeropuerto</title>
+	<title>Último METAR de un aeropuerto</title>
 	<style>
 		form {
 			display: flex;
@@ -34,7 +34,7 @@
 		input[type="submit"]:hover {
 			background-color: #3e8e41;
 		}
-		#metar, #taf {
+		#metar {
 			margin-top: 20px;
 			padding: 10px;
 			border: 1px solid #ccc;
@@ -51,31 +51,21 @@
 	</form>
 
 	<div id="metar"></div>
-	<div id="taf"></div>
 
 	<script>
 		const form = document.querySelector('form');
 		const metarDiv = document.querySelector('#metar');
-		const tafDiv = document.querySelector('#taf');
 
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const ocaci = document.querySelector('#ocaci').value;
-			const url = `https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${ocaci}&hoursBeforeNow=1`;
+			const url = `https://tgftp.nws.noaa.gov/data/observations/metar/stations/${ocaci.toUpperCase()}.TXT`;
 
 			try {
 				const response = await fetch(url);
 				const data = await response.text();
 
-				const parser = new DOMParser();
-				const xml = parser.parseFromString(data, "application/xml");
-
-				const metar = xml.querySelector("METAR raw_text").textContent;
-				const taf = xml.querySelector("TAF raw_text").textContent;
-
-				metarDiv.textContent = `METAR: ${metar}`;
-				tafDiv.textContent = `TAF: ${taf}`;
-
+				metarDiv.textContent = data;
 			} catch (error) {
 				console.log(error);
 			}
@@ -83,3 +73,4 @@
 	</script>
 </body>
 </html>
+
