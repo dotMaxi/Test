@@ -34,6 +34,13 @@
 		input[type="submit"]:hover {
 			background-color: #3e8e41;
 		}
+		#metar, #taf {
+			margin-top: 20px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			white-space: pre-wrap;
+		}
 	</style>
 </head>
 <body>
@@ -42,5 +49,17 @@
 		<input type="text" id="ocaci" name="ocaci" placeholder="Introduce el código OCACI del aeropuerto" required>
 		<input type="submit" value="Enviar">
 	</form>
-</body>
-</html>
+
+	<div id="metar"></div>
+	<div id="taf"></div>
+
+	<script>
+		const form = document.querySelector('form');
+		const metarDiv = document.querySelector('#metar');
+		const tafDiv = document.querySelector('#taf');
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			const ocaci = document.querySelector('#ocaci').value;
+			const metarUrl = `https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${ocaci}&hoursBeforeNow=1
+
