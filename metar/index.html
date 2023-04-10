@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>METAR/TAF</title>
+	<title>Formulario OCACI Aeropuerto</title>
 	<style>
 		form {
 			display: flex;
@@ -61,5 +61,22 @@
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const ocaci = document.querySelector('#ocaci').value;
-			const metarUrl = `https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${ocaci}&hoursBeforeNow=1
+			const url = `https://api.aviationweather.gov/metar/data?ids=${ocaci}&hoursBeforeNow=1&format=json`;
 
+			try {
+				const response = await fetch(url);
+				const data = await response.json();
+
+				const metar = data.features[0].properties.rawText;
+				const taf = data.features[0].properties.forecast;
+
+				metarDiv.textContent = `METAR: ${metar}`;
+				tafDiv.textContent = `TAF: ${taf}`;
+
+			} catch (error) {
+				console.log(error);
+			}
+		});
+	</script>
+</body>
+</html>
