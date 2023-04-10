@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de viento en cara y cruzado</title>
+</head>
+<body>
+  <h1>Calculadora de viento en cara y cruzado</h1>
+
+  <form>
+    <div>
+      <label for="windSpeed">Velocidad del viento (km/h):</label>
+      <input type="number" id="windSpeed" required>
+    </div>
+
+    <div>
+      <label for="windDirection">Dirección del viento (grados):</label>
+      <input type="number" id="windDirection" required>
+    </div>
+
+    <div>
+      <label for="heading">Rumbo de pista (grados):</label>
+      <input type="number" id="heading" required>
+    </div>
+
+    <button type="button" onclick="calculate()">Calcular</button>
+  </form>
+
+  <p id="windInFace"></p>
+  <p id="windCross"></p>
+
+  <script>
+    function calculate() {
+      const windSpeed = parseInt(document.getElementById("windSpeed").value);
+      const windDirection = parseInt(document.getElementById("windDirection").value);
+      const heading = parseInt(document.getElementById("heading").value);
+
+      const windAngle = windDirection - heading;
+      const windAngleRadians = windAngle * Math.PI / 180;
+      const windInFace = windSpeed * Math.cos(windAngleRadians);
+      const windCross = windSpeed * Math.sin(windAngleRadians);
+
+      document.getElementById("windInFace").innerHTML = "Viento en cara: " + windInFace.toFixed(2) + " km/h";
+      document.getElementById("windCross").innerHTML = "Viento cruzado: " + windCross.toFixed(2) + " km/h";
+    }
+  </script>
+</body>
+</html>
