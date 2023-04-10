@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Formulario OCACI Aeropuerto</title>
+	<style>
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+		}
+		label {
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+		input[type="text"] {
+			padding: 5px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			margin-bottom: 20px;
+			width: 300px;
+			max-width: 100%;
+		}
+		input[type="submit"] {
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+			margin-bottom: 20px;
+		}
+		input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<label for="ocaci">Código OCACI del aeropuerto:</label>
+		<input type="text" id="ocaci" name="ocaci" placeholder="Introduce el código OCACI del aeropuerto" required>
+		<input type="submit" value="Enviar">
+	</form>
+</body>
+</html>
