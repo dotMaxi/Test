@@ -61,7 +61,7 @@
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const ocaci = document.querySelector('#ocaci').value;
-			const url = `https://api.aviationweather.gov/metar/data?ids=${ocaci}&hoursBeforeNow=1&format=json`;
+			const url = `https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=${ocaci}&format=json`;
 
 			try {
 				const response = await fetch(url);
