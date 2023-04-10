@@ -61,14 +61,17 @@
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const ocaci = document.querySelector('#ocaci').value;
-			const url = `https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=${ocaci}&format=json`;
+			const url = `https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${ocaci}&hoursBeforeNow=1`;
 
 			try {
 				const response = await fetch(url);
-				const data = await response.json();
+				const data = await response.text();
 
-				const metar = data.features[0].properties.rawText;
-				const taf = data.features[0].properties.forecast;
+				const parser = new DOMParser();
+				const xml = parser.parseFromString(data, "application/xml");
+
+				const metar = xml.querySelector("METAR raw_text").textContent;
+				const taf = xml.querySelector("TAF raw_text").textContent;
 
 				metarDiv.textContent = `METAR: ${metar}`;
 				tafDiv.textContent = `TAF: ${taf}`;
