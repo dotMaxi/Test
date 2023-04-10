@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Último METAR de un aeropuerto</title>
+	<title>METAR de un aeropuerto</title>
 	<style>
 		form {
 			display: flex;
@@ -59,13 +59,23 @@
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const ocaci = document.querySelector('#ocaci').value;
-			const url = `https://tgftp.nws.noaa.gov/data/observations/metar/stations/GCXO.TXT`;
+			const url = `https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString=${ocaci.toUpperCase()}&hoursBeforeNow=1`;
 
 			try {
 				const response = await fetch(url);
-				const data = await response.text();
+				const xmlData = await response.text();
 
-				metarDiv.textContent = data;
+				const parser = new DOMParser();
+				const xmlDoc = parser.parseFromString(xmlData,"text/xml");
+
+				const metarData = xmlDoc.getElementsByTagName("METAR");
+
+				if (metarData.length > 0) {
+					const metar = metarData[0].getElementsByTagName("raw_text")[0].childNodes[0].nodeValue;
+					metarDiv.textContent = metar;
+				} else {
+					metarDiv.textContent = "No se encontró ningún METAR para el aeropuerto especificado.";
+				}
 			} catch (error) {
 				console.log(error);
 			}
@@ -73,4 +83,3 @@
 	</script>
 </body>
 </html>
-
