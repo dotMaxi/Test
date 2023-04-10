@@ -59,7 +59,7 @@
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const ocaci = document.querySelector('#ocaci').value;
-			const url = `https://tgftp.nws.noaa.gov/data/observations/metar/stations/${ocaci.toUpperCase()}.TXT`;
+			const url = `https://tgftp.nws.noaa.gov/data/observations/metar/stations/GCXO.TXT`;
 
 			try {
 				const response = await fetch(url);
