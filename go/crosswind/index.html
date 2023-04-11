@@ -1,1 +1,27 @@
-<HTML>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de componentes de viento</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Calculadora de componentes de viento</h1>
+
+  <form>
+    <label for="direccion">Dirección del viento (0-360 grados):</label>
+    <input type="number" id="direccion" name="direccion" min="0" max="360" required>
+
+    <label for="intensidad">Intensidad del viento (nudos):</label>
+    <input type="number" id="intensidad" name="intensidad" required>
+
+    <label for="pista">Pista (01-36):</label>
+    <input type="number" id="pista" name="pista" min="01" max="36" required>
+
+    <input type="button" value="Calcular" onclick="calcularComponentes()">
+  </form>
+
+  <div id="resultados"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
