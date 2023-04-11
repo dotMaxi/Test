@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-  <title>Calculadora de componentes de viento</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Componentes de viento</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="form.css">
 </head>
+
 <body>
-  <h1>Calculadora de componentes de viento</h1>
+  <div class="container">
+    <h1>Componentes de viento</h1>
+    <form id="form">
+      <label for="windDirection">Dirección del viento (grados):</label>
+      <input type="number" id="windDirection" min="0" max="360" required>
 
-  <form>
-    <label for="direccion">Dirección del viento (0-360 grados):</label>
-    <input type="number" id="direccion" name="direccion" min="0" max="360" required>
+      <label for="windSpeed">Intensidad del viento (nudos):</label>
+      <input type="number" id="windSpeed" min="0" required>
 
-    <label for="intensidad">Intensidad del viento (nudos):</label>
-    <input type="number" id="intensidad" name="intensidad" required>
+      <label for="runway">Pista:</label>
+      <input type="number" id="runway" min="0" max="36" required>
 
-    <label for="pista">Pista (01-36):</label>
-    <input type="number" id="pista" name="pista" min="01" max="36" required>
+      <button type="submit">Calcular</button>
+    </form>
 
-    <input type="button" value="Calcular" onclick="calcularComponentes()">
-  </form>
+    <div class="output" id="output"></div>
 
-  <div id="resultados"></div>
+    <div class="runway-container">
+      <img src="runway.jpg" alt="Pista de aterrizaje">
+      <img class="arrow arrow-blue" src="arrow.png" alt="Dirección del viento en cara">
+      <img class="arrow arrow-red" src="arrow.png" alt="Dirección del viento cruzado">
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>
