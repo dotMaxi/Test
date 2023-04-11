@@ -9,7 +9,7 @@
 
   <form>
     <div>
-      <label for="windSpeed">Velocidad del viento (km/h):</label>
+      <label for="windSpeed">Velocidad del viento (nudos):</label>
       <input type="number" id="windSpeed" required>
     </div>
 
@@ -31,7 +31,7 @@
 
   <script>
     function calculate() {
-      const windSpeed = parseInt(document.getElementById("windSpeed").value);
+      const windSpeed = parseInt(document.getElementById("windSpeed").value) * 0.868976;
       const windDirection = parseInt(document.getElementById("windDirection").value);
       const heading = parseInt(document.getElementById("heading").value);
 
@@ -40,9 +40,10 @@
       const windInFace = windSpeed * Math.cos(windAngleRadians);
       const windCross = windSpeed * Math.sin(windAngleRadians);
 
-      document.getElementById("windInFace").innerHTML = "Viento en cara: " + windInFace.toFixed(2) + " km/h";
-      document.getElementById("windCross").innerHTML = "Viento cruzado: " + windCross.toFixed(2) + " km/h";
+      document.getElementById("windInFace").innerHTML = "Viento en cara: " + windInFace.toFixed(2) + " nudos";
+      document.getElementById("windCross").innerHTML = "Viento cruzado: " + windCross.toFixed(2) + " nudos";
     }
   </script>
 </body>
 </html>
+
