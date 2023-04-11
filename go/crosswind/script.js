@@ -11,3 +11,9 @@ function calcularComponentes() {
   const resultadosDiv = document.getElementById('resultados');
   resultadosDiv.innerHTML = `<p>Componente de viento en cara: ${vientoCara} nudos</p><p>Componente de viento cruzado: ${vientoCruzado} nudos</p>`;
 }
+
+document.getElementById('pista').addEventListener('keydown', function(event) {
+  if (event.key === "Enter") {
+    calcularComponentes();
+  }
+});
