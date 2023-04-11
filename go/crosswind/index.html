@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Componentes de viento</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="form.css">
+	<meta charset="UTF-8">
+	<title>Cálculo de componentes de viento</title>
+	<link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <div class="container">
-    <h1>Componentes de viento</h1>
-    <form id="form">
-      <label for="windDirection">Dirección del viento (grados):</label>
-      <input type="number" id="windDirection" min="0" max="360" required>
+	<h1>Cálculo de componentes de viento</h1>
+	<form>
+		<label for="direccion-viento">Dirección del viento (0-360 grados)</label>
+		<input type="number" id="direccion-viento" name="direccion-viento" min="0" max="360" required>
 
-      <label for="windSpeed">Intensidad del viento (nudos):</label>
-      <input type="number" id="windSpeed" min="0" required>
+		<label for="intensidad-viento">Intensidad del viento (nudos)</label>
+		<input type="number" id="intensidad-viento" name="intensidad-viento" min="0" required>
 
-      <label for="runway">Pista:</label>
-      <input type="number" id="runway" min="0" max="36" required>
+		<label for="pista-aterrizaje">Pista de aterrizaje (00-36)</label>
+		<input type="text" id="pista-aterrizaje" name="pista-aterrizaje" maxlength="2" pattern="[0-9]{2}" required>
 
-      <button type="submit">Calcular</button>
-    </form>
+		<button type="button" id="calcular-btn">Calcular</button>
+	</form>
 
-    <div class="output" id="output"></div>
+	<div id="resultado">
+		<h2>Resultados</h2>
+		<p>Componente en cara: <span id="componente-cara"></span> nudos</p>
+			<p>Componente cruzado: <span id="componente-cruzado"></span> nudos</p>
+	</div>
 
-    <div class="runway-container">
-      <img src="runway.jpg" alt="Pista de aterrizaje">
-      <img class="arrow arrow-blue" src="arrow.png" alt="Dirección del viento en cara">
-      <img class="arrow arrow-red" src="arrow.png" alt="Dirección del viento cruzado">
-    </div>
-  </div>
+	<div id="imagen-pista">
+		<img src="https://i.imgur.com/v5o5I5S.png">
+		<img src="https://i.imgur.com/J1knFvl.png" id="flecha-cara">
+		<img src="https://i.imgur.com/DbRkM8Z.png" id="flecha-cruzado">
+	</div>
 
-  <script src="script.js"></script>
+	<script src="script.js"></script>
 </body>
-
 </html>
+
