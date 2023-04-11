@@ -13,11 +13,13 @@
     <label for="intensidad">Intensidad del viento (nudos):</label>
     <input type="number" id="intensidad" name="intensidad" required>
 
-    <label for="pista">Pista (00-36):</label>
-    <input type="number" id="pista" name="pista" min="00" max="36" required>
+    <label for="pista">Pista (01-36):</label>
+    <input type="number" id="pista" name="pista" min="01" max="36" required>
 
     <input type="button" value="Calcular" onclick="calcularComponentes()">
   </form>
+
+  <div id="resultados"></div>
 
   <script>
     function calcularComponentes() {
@@ -25,14 +27,16 @@
       const intensidad = document.getElementById("intensidad").value;
       const pista = document.getElementById("pista").value;
 
-      const viento_horizontal = intensidad * Math.cos((direccion - pista) * Math.PI / 180);
-      const viento_vertical = intensidad * Math.sin((direccion - pista) * Math.PI / 180);
+      const pista_grados = (parseInt(pista) - 1) * 10;
+      const viento_horizontal = intensidad * Math.cos((direccion - pista_grados) * Math.PI / 180);
+      const viento_vertical = intensidad * Math.sin((direccion - pista_grados) * Math.PI / 180);
 
       const viento_en_cara = viento_horizontal;
       const viento_cruzado = viento_vertical;
 
-      alert("Componente de viento en cara: " + viento_en_cara.toFixed(2) + " nudos\n" + 
-            "Componente de viento cruzado: " + viento_cruzado.toFixed(2) + " nudos");
+      const resultados = document.getElementById("resultados");
+      resultados.innerHTML = "Componente de viento en cara: " + viento_en_cara.toFixed(2) + " nudos<br>" + 
+                              "Componente de viento cruzado: " + viento_cruzado.toFixed(2) + " nudos";
     }
   </script>
 </body>
