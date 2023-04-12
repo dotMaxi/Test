@@ -89,24 +89,39 @@
 	<pre id="resultado"></pre>
 	<script>
 		function calcularHora() {
-			// Obtenemos los valores introducidos por el usuario
-			var hora_inicial = document.getElementById("hora_inicial").value;
-			var minutos_a_anadir = parseInt(document.getElementById("minutos_a_anadir").value);
+			// Obtener valores de entrada
+			var horaInicial = document.getElementById("horaInicial").value;
+			var minutos = parseInt(document.getElementById("minutos").value);
 
-			// Convertimos la hora inicial en formato hh:mm a dos variables numéricas
-			var hora = parseInt(hora_inicial.split(":")[0]);
-			var minutos = parseInt(hora_inicial.split(":")[1]);
+			// Validar minutos
+			if (isNaN(minutos) || minutos < 0 || minutos > 59) {
+			alert("El valor de los minutos debe estar entre 0 y 59.");
+			return;
+		}
 
-			// Añadimos los minutos a la hora inicial
-			var minutos_totales = minutos + minutos_a_anadir;
-			hora += Math.floor(minutos_totales / 60);
-			minutos = minutos_totales % 60;
+			// Separar hora y minutos de la hora inicial
+			var partesHoraInicial = horaInicial.split(":");
+			var hora = parseInt(partesHoraInicial[0]);
+			var minutosHoraInicial = parseInt(partesHoraInicial[1]);
 
-			// Formateamos la hora resultante
-			var hora_resultante = hora.toString().padStart(2, "0") + ":" + minutos.toString().padStart(2, "0");
+			// Calcular la hora final y los minutos finales
+			var minutosTotales = minutosHoraInicial + minutos;
+			var horasTotales = hora + Math.floor(minutosTotales / 60);
+			var minutosFinales = minutosTotales % 60;
 
-			// Mostramos la hora resultante en el elemento <pre> con id="resultado"
-			document.getElementById("resultado").textContent = "La nueva hora es: " + hora_resultante;
+			// Calcular los días adicionales si se superan las 24 horas
+			var diasAdicionales = Math.floor(horasTotales / 24);
+			horasTotales = horasTotales % 24;
+
+			// Construir el resultado
+			var resultado = "";
+			if (diasAdicionales > 0) {
+			resultado += diasAdicionales + " día(s), ";
+		}
+			resultado += horasTotales + ":" + (minutosFinales < 10 ? "0" : "") + minutosFinales;
+
+			// Mostrar resultado
+			document.getElementById("resultado").innerHTML = resultado;
 		}
 	</script>
 	<div class="footer">
