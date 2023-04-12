@@ -10,8 +10,9 @@
     }
 
     label {
-      display: block;
+      display: inline-block;
       margin-bottom: 5px;
+      width: 100px;
     }
 
     input[type="text"] {
@@ -22,6 +23,7 @@
       padding: 5px;
       border-radius: 5px;
       margin-bottom: 10px;
+      width: 200px;
     }
 
     input[type="submit"], button {
@@ -49,29 +51,19 @@
   <h1>Formulario con botón mostrar</h1>
   <form>
     <label for="callsign">Callsign:</label>
-    <br>
     <input type="text" id="callsign" name="callsign">
-    <br>
 
     <label for="origen">Origen:</label>
-    <br>
     <input type="text" id="origen" name="origen">
-    <br>
 
     <label for="std">STD:</label>
-    <br>
     <input type="text" id="std" name="std">
-    <br>
 
     <label for="destino">Destino:</label>
-    <br>
     <input type="text" id="destino" name="destino">
-    <br>
 
     <label for="fecha">Fecha:</label>
-    <br>
     <input type="text" id="fecha" name="fecha">
-    <br>
 
     <input type="submit" value="Mostrar" id="mostrar">
   </form>
