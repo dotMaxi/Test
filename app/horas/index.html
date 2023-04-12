@@ -76,17 +76,18 @@
 	</style>
 </head>
 <body>
-	<h1>Calculadora de horas y minutos</h1>
 	<form>
-		<label for="hora_inicial">Hora inicial (formato hh:mm):</label>
-		<input type="text" id="hora_inicial" name="hora_inicial">
-		<br>
-		<label for="minutos_a_anadir">Minutos a añadir:</label>
-		<input type="number" id="minutos_a_anadir" name="minutos_a_anadir">
-		<br>
-		<input type="button" value="Calcular" onclick="calcularHora()">
+		<label for="horaInicial">Hora inicial:</label>
+		<input type="text" id="horaInicial" name="horaInicial" placeholder="hh:mm" required>
+
+		<label for="minutos">Minutos a añadir:</label>
+		<input type="text" id="minutos" name="minutos" placeholder="minutos" required>
+
+		<input type="submit" value="Calcular" onclick="calcularHora(); return false;">
 	</form>
-	<pre id="resultado"></pre>
+
+	<div id="resultado"></div>
+
 	<script>
 		function calcularHora() {
 			// Obtener valores de entrada
@@ -95,9 +96,9 @@
 
 			// Validar minutos
 			if (isNaN(minutos) || minutos < 0 || minutos > 59) {
-			alert("El valor de los minutos debe estar entre 0 y 59.");
-			return;
-		}
+				alert("El valor de los minutos debe estar entre 0 y 59.");
+				return;
+			}
 
 			// Separar hora y minutos de la hora inicial
 			var partesHoraInicial = horaInicial.split(":");
@@ -116,8 +117,8 @@
 			// Construir el resultado
 			var resultado = "";
 			if (diasAdicionales > 0) {
-			resultado += diasAdicionales + " día(s), ";
-		}
+				resultado += diasAdicionales + " día(s), ";
+			}
 			resultado += horasTotales + ":" + (minutosFinales < 10 ? "0" : "") + minutosFinales;
 
 			// Mostrar resultado
