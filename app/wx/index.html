@@ -11,9 +11,27 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
-      $.get('https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=3&timeType=issue&mostRecent=true&stationString=GCXO', function(xml) {
-        var rawText = $(xml).find('TAF raw_text').text();
-        $('#raw-text').text(rawText);
+      $.ajax({
+        url: 'https://www.aviationweather.gov/adds/dataserver_current/httpparam',
+        data: {
+          dataSource: 'tafs',
+          requestType: 'retrieve',
+          format: 'xml',
+          hoursBeforeNow: 3,
+          timeType: 'issue',
+          mostRecent: true,
+          stationString: 'GCXO'
+        },
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        },
+        success: function(xml) {
+          var rawText = $(xml).find('TAF raw_text').text();
+          $('#raw-text').text(rawText);
+        },
+        error: function() {
+          $('#raw-text').text('No se pudo cargar el contenido.');
+        }
       });
     });
   </script>
