@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>METAR de Aeropuerto con jQuery</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#metar-form').submit(function(event) {
+        event.preventDefault();
+        var airportCode = $('#airport-code').val();
+        var url = 'https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=' + airportCode;
+        $.get(url, function(data) {
+          $('#metar-display').html('<pre>' + data + '</pre>');
+        }).fail(function() {
+          $('#metar-display').html('<p>No se pudo obtener el METAR.</p>');
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>METAR de Aeropuerto con jQuery</h1>
+
+  <form id="metar-form">
+    <label>
+      Aeropuerto:
+      <input type="text" id="airport-code" name="airport-code" />
+    </label>
+    <button type="submit" id="get-metar-button">Obtener METAR</button>
+  </form>
+
+  <div id="metar-display">
+    <p>Introduce el código del aeropuerto y haz clic en "Obtener METAR".</p>
+  </div>
+</body>
+</html>
