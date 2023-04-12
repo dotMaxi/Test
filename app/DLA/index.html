@@ -50,10 +50,8 @@
 <body>
   <h1>Formulario con botón mostrar</h1>
   <form>
-    <label for="callsign">Callsign:</label>
     <input type="text" id="callsign" name="callsign" placeholder="Callsign">
 
-    <label for="origen">Origen:</label>
     <input type="text" id="origen" name="origen" placeholder="Origen en OACI">
 
     <label for="std">STD:</label>
@@ -80,7 +78,7 @@
       var destino = document.getElementById("destino").value;
       var fecha = document.getElementById("fecha").value;
 
-      var valoresTexto = "(DLA-" + callsign + "-" + origen + std + " - " + destino + " - " + fecha;
+      var valoresTexto = "(DLA-" + callsign + "-" + origen + std + "-" + destino + "-DOF/" + fecha;
 
       var resultado = document.getElementById("resultado");
       resultado.textContent = valoresTexto;
