@@ -22,13 +22,16 @@
     function getMetar() {
       var airportCode = document.getElementById('airport-code').value;
       var metarTime = document.getElementById('metar-time').value;
-      var url = 'https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=' + airportCode;
+      var corsAnywhereUrl = 'https://cors-anywhere.herokuapp.com/';
+      var metarUrl = 'https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=' + airportCode;
 
       if (metarTime === '1') {
-        url += '&hours=1';
+        metarUrl += '&hours=1';
       } else if (metarTime === '2') {
-        url += '&hours=2';
+        metarUrl += '&hours=2';
       }
+
+      var url = corsAnywhereUrl + metarUrl;
 
       fetch(url)
         .then(response => response.text())
@@ -47,3 +50,4 @@
   </script>
 </body>
 </html>
+
