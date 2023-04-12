@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Formulario</title>
+	<style>
+		body {
+			background-color: black;
+			color: white;
+			font-family: Arial, sans-serif;
+		}
+
+		form {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+
+		label {
+			display: block;
+			margin-right: 10px;
+			margin-bottom: 10px;
+		}
+
+		input[type="text"] {
+			margin-bottom: 10px;
+			padding: 5px;
+			border-radius: 5px;
+			border: none;
+			background-color: #555;
+			color: white;
+			font-size: 16px;
+			width: 200px;
+		}
+
+		button[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-right: 10px;
+		}
+
+		#copy-icon {
+			font-size: 24px;
+			cursor: pointer;
+			margin-left: 10px;
+		}
+
+		.result {
+			display: flex;
+			align-items: center;
+		}
+
+		.result p {
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<form id="myForm">
+		<label for="callsign">Callsign:</label>
+		<input type="text" id="callsign" name="callsign">
+
+		<label for="origin">Origen:</label>
+			<input type="text" id="origin" name="origin">
+
+		<label for="std">STD:</label>
+		<input type="text" id="std" name="std">
+
+		<label for="destination">Destino:</label>
+		<input type="text" id="destination" name="destination">
+
+		<label for="date">Fecha:</label>
+		<input type="text" id="date" name="date">
+
+		<button type="submit">Mostrar</button>
+	</form>
+
+	<div id="result" class="result"></div>
+
+	<script>
+		const form = document.querySelector('#myForm');
+		const resultDiv = document.querySelector('#result');
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+
+			const callsign = document.querySelector('#callsign').value;
+			const origin = document.querySelector('#origin').value;
+			const std = document.querySelector('#std').value;
+			const destination = document.querySelector('#destination').value;
+			const date = document.querySelector('#date').value;
+
+			const result = `${callsign} - ${origin} - ${std} - ${destination} - ${date}`;
+			resultDiv.innerHTML = `<p>${result}</p><i id="copy-icon" class="far fa-copy"></i>`;
+		});
+
+		resultDiv.addEventListener('click', (event) => {
+			if (event.target.matches('#copy-icon')) {
+				const resultText = document.querySelector('#result p').textContent;
+				navigator.clipboard.writeText(resultText);
+				alert('El resultado ha sido copiado al portapapeles.');
+			}
+		});
+	</script>
+	
+	<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+</body>
+</html>
