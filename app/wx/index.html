@@ -1,39 +1,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Contenido de raw_text</title>
+  <title>Página de meteorología</title>
+  <style>
+    body {
+      background-color: #ADD8E6;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      color: #006699;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    form {
+      background-color: #FFFFFF;
+      border: 2px solid #006699;
+      border-radius: 5px;
+      width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #006699;
+    }
+
+    select {
+      margin-bottom: 20px;
+    }
+
+    input[type="submit"] {
+      background-color: #006699;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #result {
+      background-color: #FFFFFF;
+      border: 2px solid #006699;
+      border-radius: 5px;
+      width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      display: none;
+    }
+
+    #result h2 {
+      color: #006699;
+      margin-top: 0;
+    }
+
+    #result pre {
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
-  <h1>Contenido de raw_text</h1>
-  <div id="raw-text"></div>
-  
+  <h1>Página de meteorología</h1>
+
+  <form id="weather-form">
+    <label for="airport-input">Introduce el nombre del aeropuerto:</label>
+    <input type="text" id="airport-input" name="airport" required>
+
+    <label for="hours-select">Selecciona las horas:</label>
+    <select id="hours-select" name="hours">
+      <option value="1">Última hora</option>
+      <option value="2">Últimas 2 horas</option>
+      <option value="3" selected>Últimas 3 horas</option>
+      <option value="all">Más reciente</option>
+    </select>
+
+    <input type="submit" value="Mostrar">
+  </form>
+
+  <div id="result">
+    <h2>Respuesta del servidor:</h2>
+    <pre></pre>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    $(document).ready(function() {
-      $.ajax({
-        url: 'https://www.aviationweather.gov/adds/dataserver_current/httpparam',
-        data: {
-          dataSource: 'tafs',
-          requestType: 'retrieve',
-          format: 'xml',
-          hoursBeforeNow: 3,
-          timeType: 'issue',
-          mostRecent: true,
-          stationString: 'GCXO'
-        },
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
-        success: function(xml) {
-          var rawText = $(xml).find('TAF raw_text').text();
-          $('#raw-text').text(rawText);
-        },
-        error: function() {
-          $('#raw-text').text('No se pudo cargar el contenido.');
-        }
+    $(function() {
+      $("#weather-form").submit(function(event) {
+        event.preventDefault();
+
+        var airport = $("#airport-input").val();
+        var hours = $("#hours-select").val();
+
+        $.ajax({
+          url: "https://api.checkwx.com/metar/" + airport + "/" + hours,
+          headers: {"X-API-Key": "your-api-key"},
+          dataType: "json",
+          success: function(data) {
+            var rawText = data.data[0].raw_text;
+            $("#result pre").text(rawText);
+            $("#result").show();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            alert("Ha ocurrido un error: " + textStatus + " - " + errorThrown);
+          }
+        });
       });
     });
   </script>
 </body>
 </html>
+
