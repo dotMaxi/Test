@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Formulario de ejemplo</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+      
+      form {
+        margin: 20px auto;
+        max-width: 500px;
+        padding: 20px;
+        border: 1px solid white;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+      
+      label {
+        display: inline-block;
+        width: 80px;
+        margin-bottom: 10px;
+      }
+      
+      input[type="text"], input[type="date"] {
+        padding: 5px;
+        border: 1px solid white;
+        border-radius: 5px;
+        background-color: transparent;
+        color: white;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      input[type="button"] {
+        padding: 5px 20px;
+        background-color: white;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      
+      input[type="button"]:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+      
+      #valores {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <div>
+        <label for="callsign">Callsign:</label>
+        <input type="text" id="callsign" name="callsign">
+      </div>
+      
+      <div>
+        <label for="origen">Origen:</label>
+        <input type="text" id="origen" name="origen">
+      </div>
+      
+      <div>
+        <label for="std">STD:</label>
+        <input type="date" id="std" name="std">
+      </div>
+      
+      <div>
+        <label for="destino">Destino:</label>
+        <input type="text" id="destino" name="destino">
+      </div>
+      
+      <div>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha">
+      </div>
+      
+      <div>
+        <input type="button" value="Mostrar" onclick="mostrarValores()">
+      </div>
+    </form>
+    
+    <p id="valores"></p>
+
+    <button id="copiar">Copiar</button>
+
+    <script>
+      function mostrarValores() {
+        var callsignValor = document.getElementById("callsign").value;
+        var origenValor = document.getElementById("origen").value;
+        var stdValor = document.getElementById("std").value;
+        var destinoValor = document.getElementById("destino").value;
+        var fechaValor = document.getElementById("fecha").value;
+        var valoresTexto = callsignValor + " - " + origenValor + " - " + stdValor + " - " + destinoValor + "
+        document.getElementById("valores").textContent = valoresTexto;
+      }
+
+      var copiarBoton = document.getElementById("copiar");
+      copiarBoton.addEventListener("click", function() {
+        var valoresTexto = document.getElementById("valores").textContent;
+        var temporalInput = document.createElement("input");
+        temporalInput.value = valoresTexto;
+        document.body.appendChild(temporalInput);
+        temporalInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(temporalInput);
+        alert("Los valores han sido copiados al portapapeles.");
+      });
+    </script>
+  </body>
+</html>
+
+        
