@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Contenido de raw_text</title>
+</head>
+<body>
+  <h1>Contenido de raw_text</h1>
+  <div id="raw-text"></div>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.get('https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=3&timeType=issue&mostRecent=true&stationString=GCXO', function(xml) {
+        var rawText = $(xml).find('TAF raw_text').text();
+        $('#raw-text').text(rawText);
+      });
+    });
+  </script>
+</body>
+</html>
