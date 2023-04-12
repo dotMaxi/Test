@@ -1,116 +1,95 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Página de meteorología</title>
-  <style>
-    body {
-      background-color: #ADD8E6;
-      font-family: Arial, sans-serif;
-    }
+  <head>
+    <title>Consulta METAR y TAF</title>
+    <style>
+      /* Estilos para el formulario */
+      #formulario {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+      }
+      label {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      input[type="text"] {
+        font-size: 20px;
+        padding: 5px;
+        margin-bottom: 20px;
+      }
+      select {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+      input[type="submit"] {
+        font-size: 20px;
+        padding: 10px 20px;
+        background-color: #0072c6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #005ea2;
+      }
 
-    h1 {
-      color: #006699;
-      text-align: center;
-      margin-top: 50px;
-    }
+      /* Estilos para la sección de resultados */
+      #resultados {
+        display: none;
+        margin-top: 50px;
+      }
+      #resultados h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      #resultados pre {
+        font-size: 16px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="formulario">
+      <h1>Consulta METAR y TAF</h1>
+      <form>
+        <label for="aeropuerto">Introduce el nombre del aeropuerto:</label>
+        <input type="text" id="aeropuerto" name="aeropuerto" required>
+        <label for="tiempo">Selecciona el tiempo a consultar:</label>
+        <select id="tiempo" name="tiempo">
+          <option value="1">Más reciente</option>
+          <option value="2">Última hora</option>
+          <option value="3">Últimas 2 horas</option>
+          <option value="4">Últimas 3 horas</option>
+        </select>
+        <input type="submit" value="Mostrar">
+      </form>
+    </div>
 
-    form {
-      background-color: #FFFFFF;
-      border: 2px solid #006699;
-      border-radius: 5px;
-      width: 500px;
-      margin: 50px auto;
-      padding: 20px;
-    }
+    <div id="resultados">
+      <h2>Resultados de la consulta:</h2>
+      <pre id="raw_text"></pre>
+    </div>
 
-    label {
-      display: block;
-      margin-bottom: 10px;
-      color: #006699;
-    }
-
-    select {
-      margin-bottom: 20px;
-    }
-
-    input[type="submit"] {
-      background-color: #006699;
-      color: #FFFFFF;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #result {
-      background-color: #FFFFFF;
-      border: 2px solid #006699;
-      border-radius: 5px;
-      width: 500px;
-      margin: 0 auto;
-      padding: 20px;
-      display: none;
-    }
-
-    #result h2 {
-      color: #006699;
-      margin-top: 0;
-    }
-
-    #result pre {
-      white-space: pre-wrap;
-    }
-  </style>
-</head>
-<body>
-  <h1>Página de meteorología</h1>
-
-  <form id="weather-form">
-    <label for="airport-input">Introduce el nombre del aeropuerto:</label>
-    <input type="text" id="airport-input" name="airport" required>
-
-    <label for="hours-select">Selecciona las horas:</label>
-    <select id="hours-select" name="hours">
-      <option value="1">Última hora</option>
-      <option value="2">Últimas 2 horas</option>
-      <option value="3" selected>Últimas 3 horas</option>
-      <option value="all">Más reciente</option>
-    </select>
-
-    <input type="submit" value="Mostrar">
-  </form>
-
-  <div id="result">
-    <h2>Respuesta del servidor:</h2>
-    <pre></pre>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(function() {
-      $("#weather-form").submit(function(event) {
-        event.preventDefault();
-
-        var airport = $("#airport-input").val();
-        var hours = $("#hours-select").val();
-
-        $.ajax({
-          url: "https://api.checkwx.com/metar/" + airport + "/" + hours,
-          headers: {"X-API-Key": "your-api-key"},
-          dataType: "json",
-          success: function(data) {
-            var rawText = data.data[0].raw_text;
-            $("#result pre").text(rawText);
-            $("#result").show();
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            alert("Ha ocurrido un error: " + textStatus + " - " + errorThrown);
-          }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('form').submit(function(event) {
+          event.preventDefault();
+          $('#resultados').hide();
+          var aeropuerto = $('#aeropuerto').val();
+          var tiempo = $('#tiempo').val();
+          var url = 'https://api.checkwx.com/metar/'+aeropuerto+'/last/'+tiempo+'?token=INSERTA_AQUI_TU_TOKEN';
+          $.get(url, function(data) {
+            $('#raw_text').text(data.data[0].raw_text);
+            $('#resultados').show();
+          });
         });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
 
