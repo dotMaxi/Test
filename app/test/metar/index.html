@@ -22,7 +22,7 @@
     function getMetar() {
       var airportCode = document.getElementById('airport-code').value;
       var metarTime = document.getElementById('metar-time').value;
-      var url = 'https://api.allorigins.win/raw?url=https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=' + airportCode;
+      var url = 'https://beta.aviationweather.gov/cgi-bin/data/metar.php?ids=' + airportCode;
 
       if (metarTime === '1') {
         url += '&hours=1';
