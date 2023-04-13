@@ -38,10 +38,10 @@
 							url = `https://cors-anywhere.herokuapp.com/https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}&hours=1`;
 							break;
 						case 'lastTwoHours':
-							url = `https://api.allorigins.win/raw?url=https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}&hours=2`;
+							url = `https://cors-anywhere.herokuapp.com/https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}&hours=2`;
 							break;
 						default:
-							url = `https://api.allorigins.win/raw?url=https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}`;
+							url = `https://cors-anywhere.herokuapp.com/https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}`;
 					}
 				}
 				$.get(url, function(data){
