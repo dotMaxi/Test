@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>METAR y TAF</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<form id="airportForm">
+		<label for="airportInput">Introduce el código del aeropuerto:</label>
+		<input type="text" id="airportInput" name="airportInput"><br><br>
+		<label for="timeRange">Selecciona el rango de tiempo:</label>
+		<select id="timeRange" name="timeRange">
+			<option value="mostRecent">El más reciente</option>
+			<option value="lastHour">Última hora</option>
+			<option value="lastTwoHours">Últimas 2 horas</option>
+		</select><br><br>
+		<label for="includeTaf">Incluir TAF:</label>
+		<input type="checkbox" id="includeTaf" name="includeTaf"><br><br>
+		<input type="submit" value="Obtener información">
+	</form>
+	<div id="info"></div>
+	<script>
+		$(document).ready(function(){
+			$('#airportForm').submit(function(event){
+				event.preventDefault();
+				let airport = $('#airportInput').val();
+				let timeRange = $('#timeRange').val();
+				let includeTaf = $('#includeTaf').is(':checked');
+				let url;
+				if (includeTaf) {
+					url = `https://beta.aviationweather.gov/cgi-bin/data/taf.pl?ids=${airport}`;
+				} else {
+					switch (timeRange) {
+						case 'mostRecent':
+							url = `https://api.allorigins.win/raw?url=https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}`;
+							break;
+						case 'lastHour':
+							url = `https://api.allorigins.win/raw?url=https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}&hours=1`;
+							break;
+						case 'lastTwoHours':
+							url = `https://api.allorigins.win/raw?url=https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}&hours=2`;
+							break;
+						default:
+							url = `https://api.allorigins.win/raw?url=https://beta.aviationweather.gov/cgi-bin/data/metar.cgi?ids=${airport}`;
+					}
+				}
+				$.get(url, function(data){
+					let infoDiv = $('#info');
+					infoDiv.empty();
+					if (includeTaf) {
+						infoDiv.append(`<h3>Información TAF para ${airport}:</h3><pre>${data}</pre>`);
+					} else {
+						infoDiv.append(`<h3>Información METAR para ${airport}:</h3><pre>${data}</pre>`);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>
