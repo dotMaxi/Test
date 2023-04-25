@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Calculadora de asientos</title>
+  </head>
+  <body>
+    <h1>Calculadora de asientos</h1>
+    <form>
+      <label for="texto">Introduce la cadena de texto:</label>
+      <input type="text" id="texto" name="texto"><br><br>
+      <input type="button" value="Calcular" onclick="calcularAsientos()"><br><br>
+      <label for="first-business">First/Business:</label>
+      <input type="text" id="first-business" name="first-business" readonly><br><br>
+      <label for="premium-economy">Premium Economy:</label>
+      <input type="text" id="premium-economy" name="premium-economy" readonly><br><br>
+      <label for="economica">Económica:</label>
+      <input type="text" id="economica" name="economica" readonly><br><br>
+    </form>
+    <script>
+      function calcularAsientos() {
+        let texto = document.getElementById("texto").value;
+        let regex = /([CADJIFWEXY])(\d+)/g;
+        let matches = texto.matchAll(regex);
+        let asientos = {
+          "First/Business": 0,
+          "Premium Economy": 0,
+          "Económica": 0
+        };
+        for (const match of matches) {
+          let letra = match[1];
+          let numero = parseInt(match[2]);
+          if (letra === "W") {
+            asientos["Premium Economy"] += numero;
+          } else if (letra === "B" || letra === "E" || letra === "X" || letra === "Y") {
+            asientos["Económica"] += numero;
+          } else if (letra === "C" || letra === "A" || letra === "D" || letra === "J" || letra === "I" || letra === "F") {
+            asientos["First/Business"] += numero;
+          }
+        }
+        document.getElementById("first-business").value = asientos["First/Business"];
+        document.getElementById("premium-economy").value = asientos["Premium Economy"];
+        document.getElementById("economica").value = asientos["Económica"];
+      }
+    </script>
+  </body>
+</html>
