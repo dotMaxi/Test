@@ -86,11 +86,7 @@
       }
 
       var pistaOrientacion = (cabecera - 1) * 10;
-      var vientoRelativo = direccion - pistaOrientacion;
-
-      if (vientoRelativo < 0) {
-        vientoRelativo += 360;
-      }
+      var vientoRelativo = (direccion - pistaOrientacion + 360) % 360;
 
       var vientoEnCara = Math.sin((vientoRelativo) * (Math.PI / 180)) * velocidad;
       var vientoCruzado = Math.cos((vientoRelativo) * (Math.PI / 180)) * velocidad;
