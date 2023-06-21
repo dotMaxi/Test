@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de Tiempo</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <h1>Calculadora de Tiempo</h1>
+
+  <div class="calculator">
+    <label for="current-time">Hora actual:</label>
+    <input type="time" id="current-time">
+
+    <label for="add-minutes">Agregar minutos:</label>
+    <input type="number" id="add-minutes" min="1" step="1">
+
+    <button onclick="calculateNewTime()">Calcular</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
