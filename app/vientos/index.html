@@ -52,45 +52,26 @@
     }
 
     #pista {
-      display: block;
+      position: relative;
       margin-top: 30px;
       text-align: center;
     }
 
-    #pista img {
-      max-width: 200px;
-      margin: 0 auto;
+    #pista span {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
     }
 
-    #pista .arrow {
-      position: relative;
-      display: inline-block;
-    }
-
-    #pista .arrow::before {
-      content: '';
+    #pista::before {
+      content: "";
       position: absolute;
       top: 50%;
-      left: 100%;
-      width: 0;
-      height: 0;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-    }
-
-    #pista .arrow.cabeza::before {
-      border-right: 15px solid #000;
-      transform: translateY(-50%);
-    }
-
-    #pista .arrow.cola::before {
-      border-left: 15px solid #000;
-      transform: translateY(-50%) rotate(180deg);
-    }
-
-    #pista .arrow.viento-cruzado::before {
-      border-left: 15px solid #f00;
-      transform: translateY(-50%) rotate(45deg);
+      left: 0;
+      right: 0;
+      border-top: 2px dashed #000;
     }
   </style>
 </head>
@@ -128,8 +109,8 @@
         return;
       }
 
-      var vientoEnCara = direccion - pista;
-      var vientoCruzado = velocidad;
+      var vientoEnCara = Math.sin((direccion - pista) * (Math.PI / 180)) * velocidad;
+      var vientoCruzado = Math.cos((direccion - pista) * (Math.PI / 180)) * velocidad;
 
       if (vientoEnCara < 0) {
         vientoEnCara = -vientoEnCara;
@@ -138,12 +119,12 @@
         mostrarResultado("Viento en cara", vientoEnCara, vientoCruzado);
       }
 
-      mostrarPista(pista, direccion);
+      mostrarPista(pista);
     });
 
     function mostrarResultado(tipoViento, vientoEnCara, vientoCruzado) {
       var resultado = document.getElementById("resultado");
-      resultado.innerHTML = tipoViento + ": " + vientoEnCara + "°, Viento Cruzado: " + vientoCruzado + " nudos";
+      resultado.innerHTML = tipoViento + ": " + vientoEnCara.toFixed(2) + " nudos, Viento Cruzado: " + vientoCruzado.toFixed(2) + " nudos";
       resultado.className = "";
     }
 
@@ -153,15 +134,9 @@
       resultado.className = "error";
     }
 
-    function mostrarPista(pista, direccion) {
+    function mostrarPista(pista) {
       var pistaElement = document.getElementById("pista");
-      pistaElement.innerHTML = '<img src="pista-' + pista + '.png" alt="Pista ' + pista + '">' +
-        '<div class="arrow cabeza"></div>' +
-        '<div class="arrow viento-cruzado"></div>';
-      var flechaCabeza = pistaElement.querySelector(".cabeza");
-      var flechaCruzado = pistaElement.querySelector(".viento-cruzado");
-      flechaCabeza.style.transform = "rotate(" + direccion + "deg)";
-      flechaCruzado.style.transform = "rotate(" + (direccion + 90) + "deg)";
+      pistaElement.innerHTML = '<span>' + pista + '</span>';
     }
   </script>
 </body>
