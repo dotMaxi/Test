@@ -92,11 +92,11 @@
       var vientoCruzado;
 
       if (vientoRelativo <= 180) {
-        vientoEnCara = Math.sin((vientoRelativo) * (Math.PI / 180)) * velocidad;
-        vientoCruzado = Math.cos((vientoRelativo) * (Math.PI / 180)) * velocidad;
+        vientoEnCara = Math.round(Math.sin((vientoRelativo) * (Math.PI / 180)) * velocidad);
+        vientoCruzado = Math.round(Math.cos((vientoRelativo) * (Math.PI / 180)) * velocidad);
       } else {
-        vientoEnCara = Math.sin((360 - vientoRelativo) * (Math.PI / 180)) * velocidad;
-        vientoCruzado = -Math.cos((360 - vientoRelativo) * (Math.PI / 180)) * velocidad;
+        vientoEnCara = Math.round(Math.sin((360 - vientoRelativo) * (Math.PI / 180)) * velocidad);
+        vientoCruzado = Math.round(-Math.cos((360 - vientoRelativo) * (Math.PI / 180)) * velocidad);
       }
 
       if (vientoEnCara < 0) {
@@ -108,7 +108,7 @@
 
     function mostrarResultado(tipoViento, vientoEnCara, vientoCruzado) {
       var resultado = document.getElementById("resultado");
-      resultado.innerHTML = tipoViento + ": " + vientoEnCara.toFixed(2) + " nudos, Viento Cruzado: " + vientoCruzado.toFixed(2) + " nudos";
+      resultado.innerHTML = tipoViento + ": " + vientoEnCara + " nudos, Viento Cruzado: " + vientoCruzado + " nudos";
       resultado.className = "";
     }
 
