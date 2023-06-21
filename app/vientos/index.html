@@ -95,14 +95,14 @@
         vientoEnCara = Math.round(Math.sin((vientoRelativo) * (Math.PI / 180)) * velocidad);
         vientoCruzado = Math.round(Math.cos((vientoRelativo) * (Math.PI / 180)) * velocidad);
       } else {
-        vientoEnCara = Math.round(Math.sin((360 - vientoRelativo) * (Math.PI / 180)) * velocidad);
-        vientoCruzado = Math.round(-Math.cos((360 - vientoRelativo) * (Math.PI / 180)) * velocidad);
+        vientoEnCara = Math.round(-Math.sin((vientoRelativo) * (Math.PI / 180)) * velocidad);
+        vientoCruzado = Math.round(-Math.cos((vientoRelativo) * (Math.PI / 180)) * velocidad);
       }
 
-      if (vientoEnCara < 0) {
-        mostrarResultado("Viento en cola", -vientoEnCara, vientoCruzado);
-      } else {
+      if (vientoEnCara >= 0) {
         mostrarResultado("Viento en cara", vientoEnCara, vientoCruzado);
+      } else {
+        mostrarResultado("Viento en cola", -vientoEnCara, vientoCruzado);
       }
     });
 
