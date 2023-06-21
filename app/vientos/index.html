@@ -50,37 +50,14 @@
     #resultado.error {
       color: red;
     }
-
-    #pista {
-      position: relative;
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    #pista span {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-weight: bold;
-    }
-
-    #pista::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      border-top: 2px dashed #000;
-    }
   </style>
 </head>
 <body>
   <h1>Calculadora de Viento</h1>
   <div class="container">
     <form id="formulario">
-      <label for="pista">Número de Pista (01-36):</label>
-      <input type="number" id="pista" min="1" max="36" required>
+      <label for="cabecera">Número de Cabecera de Pista (01-36):</label>
+      <input type="number" id="cabecera" min="1" max="36" required>
       <label for="direccion">Dirección del Viento (000-359):</label>
       <input type="number" id="direccion" min="0" max="359" required>
       <label for="velocidad">Velocidad del Viento (nudos):</label>
@@ -88,19 +65,18 @@
       <input type="submit" value="Calcular">
     </form>
     <div id="resultado"></div>
-    <div id="pista"></div>
   </div>
 
   <script>
     document.getElementById("formulario").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      var pista = parseInt(document.getElementById("pista").value);
+      var cabecera = parseInt(document.getElementById("cabecera").value);
       var direccion = parseInt(document.getElementById("direccion").value);
       var velocidad = parseInt(document.getElementById("velocidad").value);
 
-      if (pista < 1 || pista > 36) {
-        mostrarError("El número de pista debe estar entre 01 y 36.");
+      if (cabecera < 1 || cabecera > 36) {
+        mostrarError("El número de cabecera de pista debe estar entre 01 y 36.");
         return;
       }
 
@@ -109,17 +85,21 @@
         return;
       }
 
-      var vientoEnCara = Math.sin((direccion - pista) * (Math.PI / 180)) * velocidad;
-      var vientoCruzado = Math.cos((direccion - pista) * (Math.PI / 180)) * velocidad;
+      var pistaOrientacion = (cabecera - 1) * 10;
+      var vientoRelativo = direccion - pistaOrientacion;
+
+      if (vientoRelativo < 0) {
+        vientoRelativo += 360;
+      }
+
+      var vientoEnCara = Math.sin((vientoRelativo) * (Math.PI / 180)) * velocidad;
+      var vientoCruzado = Math.cos((vientoRelativo) * (Math.PI / 180)) * velocidad;
 
       if (vientoEnCara < 0) {
-        vientoEnCara = -vientoEnCara;
-        mostrarResultado("Viento en cola", vientoEnCara, vientoCruzado);
+        mostrarResultado("Viento en cola", -vientoEnCara, vientoCruzado);
       } else {
         mostrarResultado("Viento en cara", vientoEnCara, vientoCruzado);
       }
-
-      mostrarPista(pista);
     });
 
     function mostrarResultado(tipoViento, vientoEnCara, vientoCruzado) {
@@ -132,11 +112,6 @@
       var resultado = document.getElementById("resultado");
       resultado.innerHTML = mensaje;
       resultado.className = "error";
-    }
-
-    function mostrarPista(pista) {
-      var pistaElement = document.getElementById("pista");
-      pistaElement.innerHTML = '<span>' + pista + '</span>';
     }
   </script>
 </body>
