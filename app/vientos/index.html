@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Viento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    form {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="number"],
+    input[type="submit"] {
+      padding: 5px;
+      font-size: 16px;
+      border-radius: 3px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #resultado.error {
+      color: red;
+    }
+
+    #pista {
+      display: block;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    #pista img {
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    #pista .arrow {
+      position: relative;
+      display: inline-block;
+    }
+
+    #pista .arrow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+    }
+
+    #pista .arrow.cabeza::before {
+      border-right: 15px solid #000;
+      transform: translateY(-50%);
+    }
+
+    #pista .arrow.cola::before {
+      border-left: 15px solid #000;
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    #pista .arrow.viento-cruzado::before {
+      border-left: 15px solid #f00;
+      transform: translateY(-50%) rotate(45deg);
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Viento</h1>
+  <div class="container">
+    <form id="formulario">
+      <label for="pista">Número de Pista (01-36):</label>
+      <input type="number" id="pista" min="1" max="36" required>
+      <label for="direccion">Dirección del Viento (000-359):</label>
+      <input type="number" id="direccion" min="0" max="359" required>
+      <label for="velocidad">Velocidad del Viento (nudos):</label>
+      <input type="number" id="velocidad" required>
+      <input type="submit" value="Calcular">
+    </form>
+    <div id="resultado"></div>
+    <div id="pista"></div>
+  </div>
+
+  <script>
+    document.getElementById("formulario").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var pista = parseInt(document.getElementById("pista").value);
+      var direccion = parseInt(document.getElementById("direccion").value);
+      var velocidad = parseInt(document.getElementById("velocidad").value);
+
+      if (pista < 1 || pista > 36) {
+        mostrarError("El número de pista debe estar entre 01 y 36.");
+        return;
+      }
+
+      if (direccion < 0 || direccion > 359) {
+        mostrarError("La dirección del viento debe estar entre 000 y 359.");
+        return;
+      }
+
+      var vientoEnCara = direccion - pista;
+      var vientoCruzado = velocidad;
+
+      if (vientoEnCara < 0) {
+        vientoEnCara = -vientoEnCara;
+        mostrarResultado("Viento en cola", vientoEnCara, vientoCruzado);
+      } else {
+        mostrarResultado("Viento en cara", vientoEnCara, vientoCruzado);
+      }
+
+      mostrarPista(pista, direccion);
+    });
+
+    function mostrarResultado(tipoViento, vientoEnCara, vientoCruzado) {
+      var resultado = document.getElementById("resultado");
+      resultado.innerHTML = tipoViento + ": " + vientoEnCara + "°, Viento Cruzado: " + vientoCruzado + " nudos";
+      resultado.className = "";
+    }
+
+    function mostrarError(mensaje) {
+      var resultado = document.getElementById("resultado");
+      resultado.innerHTML = mensaje;
+      resultado.className = "error";
+    }
+
+    function mostrarPista(pista, direccion) {
+      var pistaElement = document.getElementById("pista");
+      pistaElement.innerHTML = '<img src="pista-' + pista + '.png" alt="Pista ' + pista + '">' +
+        '<div class="arrow cabeza"></div>' +
+        '<div class="arrow viento-cruzado"></div>';
+      var flechaCabeza = pistaElement.querySelector(".cabeza");
+      var flechaCruzado = pistaElement.querySelector(".viento-cruzado");
+      flechaCabeza.style.transform = "rotate(" + direccion + "deg)";
+      flechaCruzado.style.transform = "rotate(" + (direccion + 90) + "deg)";
+    }
+  </script>
+</body>
+</html>
