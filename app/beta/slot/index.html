@@ -2,21 +2,7 @@
 <html>
 <head>
   <title>Formulario de Estaciones</title>
-  <style>
-    .form-container {
-      width: 300px;
-      margin: 0 auto;
-    }
-
-    .form-container select, .form-container button, .form-container input {
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    .form-container button {
-      padding: 5px 10px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
   <div class="form-container">
@@ -37,33 +23,6 @@
     <div id="airport-result"></div>
   </div>
 
-  <script>
-    document.getElementById('create-slot').addEventListener('click', function() {
-      var seasonSelect = document.getElementById('season');
-      var selectedSeason = seasonSelect.value;
-
-      var date = new Date();
-      var year = date.getFullYear().toString().substr(-2);
-      var slot = '';
-
-      if (selectedSeason === 'invierno') {
-        slot = 'W' + year;
-      } else if (selectedSeason === 'verano') {
-        slot = 'S' + year;
-      }
-
-      var day = ('0' + date.getDate()).slice(-2);
-      var month = date.toLocaleString('default', { month: 'short' }).toUpperCase();
-
-      document.getElementById('result').textContent = slot;
-      document.getElementById('date').textContent = day + ' ' + month;
-    });
-
-    document.getElementById('airport').addEventListener('input', function() {
-      var airportCode = this.value;
-      document.getElementById('airport-result').textContent = airportCode;
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
-
