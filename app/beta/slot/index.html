@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Responsive Design</title>
+  <title>Formulario con Opciones de Temporada</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Responsive Design Example</h1>
-    <p>This is a responsive design example.</p>
+    <h1>Formulario de Temporada</h1>
+    <form>
+      <div class="form-group">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="season">Temporada:</label>
+        <select id="season" name="season">
+          <option value="summer">Verano</option>
+          <option value="winter">Invierno</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
   </div>
-
-  <script src="script.js"></script>
 </body>
 </html>
