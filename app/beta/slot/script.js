@@ -1,25 +1,17 @@
-document.getElementById('create-slot').addEventListener('click', function() {
-  var seasonSelect = document.getElementById('season');
-  var selectedSeason = seasonSelect.value;
+document.getElementById('slotForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Evita que se envíe el formulario y se recargue la página
 
-  var date = new Date();
-  var year = date.getFullYear().toString().substr(-2);
-  var slot = '';
+  // Obtén los valores de los campos de entrada
+  var flightNumber = document.getElementById('flightNumber').value;
+  var airline = document.getElementById('airline').value;
+  var departureTime = document.getElementById('departureTime').value;
 
-  if (selectedSeason === 'invierno') {
-    slot = 'W' + year;
-  } else if (selectedSeason === 'verano') {
-    slot = 'S' + year;
-  }
+  // Crea el mensaje de confirmación del slot
+  var slotConfirmation = 'Slot creado exitosamente:<br>' +
+    'Número de vuelo: ' + flightNumber + '<br>' +
+    'Aerolínea: ' + airline + '<br>' +
+    'Hora de salida: ' + departureTime;
 
-  var day = ('0' + date.getDate()).slice(-2);
-  var month = date.toLocaleString('default', { month: 'short' }).toUpperCase();
-
-  document.getElementById('result').textContent = slot;
-  document.getElementById('date').textContent = day + ' ' + month;
-});
-
-document.getElementById('airport').addEventListener('input', function() {
-  var airportCode = this.value;
-  document.getElementById('airport-result').textContent = airportCode;
+  // Muestra el mensaje de confirmación en el elemento de resultado
+  document.getElementById('slotResult').innerHTML = slotConfirmation;
 });
