@@ -1,32 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Formulario con Opciones de Temporada</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>Formulario de Estaciones</title>
+  <style>
+    .form-container {
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    .form-container select, .form-container button {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .form-container button {
+      padding: 5px 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Formulario de Temporada</h1>
-    <form>
-      <div class="form-group">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="season">Temporada:</label>
-        <select id="season" name="season">
-          <option value="summer">Verano</option>
-          <option value="winter">Invierno</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <button type="submit">Enviar</button>
-      </div>
-    </form>
+  <div class="form-container">
+    <label for="season">Selecciona una estación:</label>
+    <select id="season">
+      <option value="invierno">Invierno</option>
+      <option value="verano">Verano</option>
+    </select>
+
+    <button id="create-slot">Crear Slot</button>
+
+    <div id="result"></div>
   </div>
+
+  <script>
+    document.getElementById('create-slot').addEventListener('click', function() {
+      var seasonSelect = document.getElementById('season');
+      var selectedSeason = seasonSelect.value;
+
+      if (selectedSeason === 'invierno') {
+        var date = new Date();
+        var year = date.getFullYear().toString().substr(-2);
+        var slot = 'W' + year;
+        document.getElementById('result').textContent = slot;
+      }
+    });
+  </script>
 </body>
 </html>
