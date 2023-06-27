@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Formulario de Estaciones</title>
+  <title>Asistente de Slot Aeroportuario</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <div class="form-container">
-    <label for="season">Selecciona una estación:</label>
-    <select id="season">
-      <option value="invierno">Invierno</option>
-      <option value="verano">Verano</option>
-    </select>
+  <h1>Asistente de Slot Aeroportuario</h1>
 
-    <button id="create-slot">Crear Slot</button>
+  <form id="slotForm">
+    <label for="flightNumber">Número de vuelo:</label>
+    <input type="text" id="flightNumber" required>
 
-    <div id="result"></div>
-    <div id="date"></div>
+    <label for="airline">Aerolínea:</label>
+    <input type="text" id="airline" required>
 
-    <label for="airport">Aeropuerto (Código IATA):</label>
-    <input type="text" id="airport" placeholder="Introduce el código IATA">
+    <label for="departureTime">Hora de salida:</label>
+    <input type="text" id="departureTime" required>
 
-    <div id="airport-result"></div>
-  </div>
+    <button type="submit">Crear Slot</button>
+  </form>
+
+  <div id="slotResult"></div>
 
   <script src="script.js"></script>
 </body>
