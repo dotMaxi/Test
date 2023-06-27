@@ -29,6 +29,7 @@
     <button id="create-slot">Crear Slot</button>
 
     <div id="result"></div>
+    <div id="date"></div>
   </div>
 
   <script>
@@ -46,7 +47,11 @@
         slot = 'S' + year;
       }
 
+      var day = ('0' + date.getDate()).slice(-2);
+      var month = date.toLocaleString('default', { month: 'short' }).toUpperCase();
+
       document.getElementById('result').textContent = slot;
+      document.getElementById('date').textContent = day + ' ' + month;
     });
   </script>
 </body>
